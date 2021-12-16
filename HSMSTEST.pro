@@ -25,11 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    hsmsgem.cpp
+    hsmsgem.cpp \
+    hsmsgemglobal.cpp \
+    itemglobal.cpp
 
 HEADERS  += mainwindow.h \
     hsmsgem.h \
-    hsmsgemglobal.h
+    hsmsgemglobal.h \
+    itemglobal.h
 
 FORMS    += mainwindow.ui \
     hsmsgem.ui

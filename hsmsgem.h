@@ -6,6 +6,12 @@
 #include <QTcpSocket>
 #include "hsmsgemglobal.h"
 
+/**
+* @projectName   HSMSTEST
+* @brief         摘要
+* @author        Laodino
+* @date          2021-12-16
+*/
 namespace Ui {
 class HSMSGEM;
 }
@@ -45,46 +51,16 @@ private:
 
     bool WriteSocket(QByteArray message);
 
+    //bool (*WriteSocketptr)(QByteArray message);
+
     /**
            * @brief DataProcess
            */
     void DataProcess(QByteArray messagedata);
 
-    QByteArray structToBytearry(HSMSMessageInfo _hsmsmessageinfo);
-    QByteArray structToBytearry(HSMSHeadr _hsmsheader);
 
 
-    /**
-      * @brief SelectReq
-      */
-    void SelectReq();
 
-    /**
-     * @brief SelectRsp
-     * @param sessionid
-     * @param messageid
-     */
-    void SelectRsp(uint16_t sessionid, uint32_t messageid);
-
-    /**
-     * @brief UnselectReq
-     */
-    void UnselectReq();
-    /**
-     * @brief UnselectRsp
-     * @param sessionid
-     * @param messageid
-     */
-    void UnselectRsp(uint16_t sessionid, uint32_t messageid);
-
-
-    void LinkTestReq();
-
-    void LinkTestRsp(uint32_t messageid);
-
-    void RejectReq(uint16_t sessionid, uint32_t messageid);
-
-    void SeparateReq();
 
     /**
        * @brief messagecount

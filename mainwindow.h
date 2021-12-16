@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "tcpsocket.h"
 #include "hsmsgem.h"
 
 namespace Ui {
