@@ -5,6 +5,8 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include "hsmsgemglobal.h"
+#include "itemglobal.h"
+#include "qcommunicationstatemachine.h"
 
 /**
 * @projectName   HSMSTEST
@@ -68,6 +70,8 @@ private:
        */
 
     uint32_t messagecount =1;
+
+signals:
 
 
 

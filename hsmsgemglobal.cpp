@@ -127,7 +127,7 @@ QByteArray  UnselectRsp(uint16_t sessionid,uint8_t unselectstatus,uint32_t messa
     _hsmsmessaginfo.HeaderByte2 = 0x00;
     /*Deselect状态
      * 0 通讯结束，deselect成功
-     * 1 当前通讯没有进行select，或者之前已经deselect过
+     * 1 当前通讯没有进行select，或者之前已经unselect过
      * 2 当前sessionid仍然在使用，如果请求者想要终止通讯先发送separate.req
      * 3-127 子标准定义
      * 128-255预留

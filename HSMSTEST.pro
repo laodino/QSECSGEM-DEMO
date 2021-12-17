@@ -27,12 +27,18 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     hsmsgem.cpp \
     hsmsgemglobal.cpp \
-    itemglobal.cpp
+    itemglobal.cpp \
+    qcommunicationstatemachine.cpp \
+    itembase.cpp \
+    itemfactory.cpp
 
 HEADERS  += mainwindow.h \
     hsmsgem.h \
     hsmsgemglobal.h \
-    itemglobal.h
+    itemglobal.h \
+    qcommunicationstatemachine.h \
+    itembase.h \
+    itemfactory.h
 
 FORMS    += mainwindow.ui \
     hsmsgem.ui

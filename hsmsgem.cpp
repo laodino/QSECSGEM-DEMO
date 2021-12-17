@@ -8,6 +8,7 @@ HSMSGEM::HSMSGEM(QWidget *parent) :
 {
     ui->setupUi(this);
     _socket = new QTcpSocket;
+    QCommunicationStateMachine::getinstance();
     listen(5000);
 }
 
@@ -56,6 +57,7 @@ void HSMSGEM::OneNewConnection()
     qDebug()<<"端口号:"<<QString::number(_socket->peerPort());
     connect(_socket,&QTcpSocket::readyRead,this,&HSMSGEM::ReadData);
     connect(_socket,&QTcpSocket::disconnected,this,&HSMSGEM::ClientDisconnect);
+    QCommunicationStateMachine::getinstance()->NotConnected2NotSelected();
 }
 
 void HSMSGEM::ReadData()
@@ -86,26 +88,38 @@ void HSMSGEM::DataProcess(QByteArray messagedata)
         break;
     case SELECTREQ:
         //selectrsp
+        if(QCommunicationStateMachine::getinstance()->GetCurrentState()==NOTSELECTED)
         WriteSocket(SelectRsp(newmessage.SessionID,COMMUNICATIONESTABLISHED,newmessage.SystemBytes));
+        else
+           WriteSocket(SelectRsp(newmessage.SessionID,COMMUNICATIONALREADYACTIVE,newmessage.SystemBytes));
         break;
     case SELECTRSP:
         //maybe test the link
         break;
     case UNSELECTREQ:
-        break;
-        WriteSocket(UnselectRsp(newmessage.SessionID,COMMUNICATIONENDED,newmessage.SystemBytes));
+        if(QCommunicationStateMachine::getinstance()->GetCurrentState()==SELECTED)
+            WriteSocket(UnselectRsp(newmessage.SessionID,COMMUNICATIONENDED,newmessage.SystemBytes));
+        else
+            WriteSocket(UnselectRsp(newmessage.SessionID,COMMUNICATIONNOTESTABLISHED,newmessage.SystemBytes));
         break;
     case UNSELECTRSP:
+        QCommunicationStateMachine::getinstance()->Selected2NotSelected();
         break;
     case LINKTESTREQ:
-        //testling
+        //testlink
         WriteSocket(LinkTestRsp(newmessage.SystemBytes));
         break;
     case LINKTESTRSP:
+        QCommunicationStateMachine::getinstance()->NotSelected2Selected();
         break;
     case REJECTREQ:
+
         break;
     case SEPARATEREQ:
+        //先断开hsms连接再断开tcpip
+        QCommunicationStateMachine::getinstance()->Selected2NotSelected();
+        QCommunicationStateMachine::getinstance()->NotSelected2NotConnect();
+
         break;
     default:
         WriteSocket(RejectReq(newmessage.SessionID,newmessage.SType,0x01,newmessage.SystemBytes));
